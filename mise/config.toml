@@ -1,0 +1,13 @@
+[settings]
+experimental = true
+asdf = false
+vfox = true
+
+[tools]
+cmake = "latest"
+fd = "latest"
+fzf = "latest"
+make = "latest"
+node = "latest"
+python = "latest"
+ripgrep = "latest"
