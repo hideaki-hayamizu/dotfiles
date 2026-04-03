@@ -2,7 +2,7 @@ local wezterm = require('wezterm')
 local utils = require('utils')
 
 local default_fonts = {
-  user = { 'Firge35Nerd Console' },
+  user = { 'Firge35Nerd Console', 'Symbols Nerd Font Mono' },
   wez = { 'JetBrains Mono', 'Noto Color Emoji', 'Symbols Nerd Font Mono' },
   windows = { 'Consolas' },
   macos = { 'San Francisco' },
