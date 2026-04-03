@@ -46,6 +46,7 @@ local opts = {
   hidden = true,
   wrap = false,
   breakindent = true,
+  showtabline = 2,
   showmatch = true,
   showmode = false,
   showcmd = false,
