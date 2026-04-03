@@ -61,3 +61,5 @@ vim.keymap.set('n', 'U', '<C-r>') -- redo
 vim.keymap.set("x", "y", "mzy`z") -- keep cursor position after yank in visual mode
 vim.keymap.set("x", "<", "<gv") -- keep cursor position in visual mode
 vim.keymap.set("x", ">", ">gv")
+vim.keymap.set('x', '<tab>', '>gv', { noremap = false })
+vim.keymap.set('x', '<S-tab>', '<gv', { noremap = false })
