@@ -5,10 +5,7 @@ return {
   config = true,
   opts = {
     bold = false,
-    inverse = true,
-    invert_selection = true,
-    invert_signs = true,
-    invert_tabline = true,
+    inverse = false,
     overrides = {
       ErrorMsg = {
         fg = vim.o.background == 'dark' and '#fb4934' or "#9d0006",
