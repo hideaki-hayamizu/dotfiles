@@ -29,6 +29,13 @@ local opts = {
     extends = "+",
     precedes = "-",
   },
+  fillchars = {
+    eob = " ",
+    foldclose = "",
+    foldopen = "",
+    foldsep = " ",
+    foldinner = " ",
+  },
   title = true,
   laststatus = 3, -- global status line
   ruler = false,
@@ -68,6 +75,7 @@ local opts = {
   pumblend = 10,
   foldmethod = "indent",
   foldlevel = 99,
+  foldcolumn = "1",
 }
 
 vim.g.loaded_netrw = 1
