@@ -5,8 +5,8 @@ function M.base_name(s)
 end
 
 function M.get_file_name(f)
-  local file_name = f:match('[^/\\]*.lua$')
-  return file_name:sub(0, #file_name - 4)
+  local file_name = f:match('[^/\\]*%.lua$')
+  return file_name:sub(1, #file_name - 4)
 end
 
 return M
