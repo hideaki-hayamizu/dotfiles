@@ -12,7 +12,7 @@ end
 
 local opts = {
   number = true,
-  relativenumber = true,
+  relativenumber = false,
   cursorline = true,
   cursorcolumn = false,
   mouse = 'a', --enable mouse
