@@ -54,8 +54,6 @@ vim.keymap.set("n", "bp", "<cmd>bprevious<CR>")
 vim.keymap.set("n", "bi", "<cmd>>BufferPin<CR>")
 
 -- terminal
-vim.keymap.set('n', '<C-j>', [[<cmd>tabe | terminal<CR>]])
-vim.keymap.set('t', '<C-j>', [[<C-\><C-n><cmd>q<CR>]])
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 
 -- custom
