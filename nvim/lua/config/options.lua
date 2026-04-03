@@ -88,7 +88,7 @@ local function split(s, c)
 end
 
 local node_path = split((vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1) and string.gsub(vim.fn.system("where.exe node"), "node.exe", "") or string.gsub(vim.fn.system("which node"), "node", ""))
-print(node_path[1])
+-- print(node_path[1])
 vim.g.node_host_prog = node_path[1] .. 'node_modules/neovim/bin/cli.js'
 
 vim.opt.shortmess:append("I")
