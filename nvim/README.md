@@ -12,7 +12,7 @@
 - tar >= 3.8.4
 - curl >= 8.18.0
 - node >= 24.13.0
-- python >= 3.14.3
+- python = 3.13
 - tree-sitter-cli >= 0.26.1 (run 'npm install -g tree-sitter-cli' and 'tree-sitter init-config' on your shell)
 - cmake >= 4.3.0
 - GNU make >= 4.4.1
