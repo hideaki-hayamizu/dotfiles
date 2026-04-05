@@ -7,6 +7,7 @@
 - luarocks >= 3.13.0
 - Git >= 2.53.0
 - fzf >= 0.70.0
+- fd >= 10.4.2
 - ripgrep >= 15.1.0
 - tar >= 3.8.4
 - curl >= 8.18.0
@@ -15,3 +16,13 @@
 - tree-sitter-cli >= 0.26.1 (run 'npm install -g tree-sitter-cli' and 'tree-sitter init-config' on your shell)
 - a C compiler
 - a Nerd font
+
+<span style="color: aqua; ">For Unix Systems<br>
+- unzip(1)
+- gzip(1)
+</span>
+
+<span style="color: lightgreen; ">For Windows Systems<br>
+- pwsh
+- 7zip
+</span>
