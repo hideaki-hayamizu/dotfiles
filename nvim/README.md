@@ -14,6 +14,8 @@
 - node >= 24.13.0
 - python >= 3.14.3
 - tree-sitter-cli >= 0.26.1 (run 'npm install -g tree-sitter-cli' and 'tree-sitter init-config' on your shell)
+- cmake >= 4.3.0
+- GNU make >= 4.4.1
 - a C compiler
 - a Nerd font
 
