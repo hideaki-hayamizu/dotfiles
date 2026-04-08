@@ -77,6 +77,7 @@ local opts = {
   foldlevel = 99,
   foldcolumn = "1",
   completeopt = { "menu", "menuone", "noselect" },
+  guicursor = 'a:blinkon0',
 }
 
 vim.g.loaded_netrw = 1
