@@ -76,9 +76,9 @@ local builtin = require('telescope.builtin')
 local buttons = {
   type = 'group',
   val = {
-    button('e', 'New file', '<cmd>ene <CR>'),
-    button( leader .. 'f f', 'Find file', builtin.find_files),
-    button( leader .. 'f h', 'Recently opened files', builtin.oldfiles),
+    button('n', 'New file', '<cmd>ene <CR>'),
+    button( 'f', 'Find file', builtin.find_files),
+    button( 'h', 'Recently opened files', builtin.oldfiles),
   },
   opts = {
     spacing = 1,
