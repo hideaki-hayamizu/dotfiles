@@ -76,6 +76,7 @@ local opts = {
   foldmethod = "indent",
   foldlevel = 99,
   foldcolumn = "1",
+  completeopt = { "menu", "menuone", "noselect" },
 }
 
 vim.g.loaded_netrw = 1
