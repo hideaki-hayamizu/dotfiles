@@ -2,21 +2,30 @@ return {
   'saghen/blink.cmp',
   dependencies = { 'rafamadriz/friendly-snippets' },
   version = '1.*',
+  init = function()
+    local map = function (lhs, rhs)
+      vim.keymap.set('i', lhs, rhs)
+    end
+
+    -- disable
+    map('<C-u>', '<Nop>')
+  end,
   opts = {
     keymap = {
       preset = 'none',
-      ['<Tab>'] = { 'show_and_insert_or_accept_single', 'select_next' },
-      ['<S-Tab>'] = { 'show_and_insert_or_accept_single', 'select_prev' },
-
-      ['<C-space>'] = { 'show', 'fallback' },
+      ['<Tab>'] = { 'select_and_accept', 'fallback' },
 
       ['<C-n>'] = { 'select_next', 'fallback' },
       ['<C-p>'] = { 'select_prev', 'fallback' },
-      ['<Right>'] = { 'select_next', 'fallback' },
-      ['<Left>'] = { 'select_prev', 'fallback' },
 
-      ['<C-y>'] = { 'select_and_accept', 'fallback' },
-      ['<C-e>'] = { 'cancel', 'fallback' },
+      ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+      ['<C-S-d>'] = { 'scroll_signature_down', 'fallback' },
+      ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<C-S-u>'] = { 'scroll_signature_up', 'fallback' },
+
+      ['<C-e>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      ['<Esc>'] = { 'cancel', 'fallback' },
     },
     appearance = {
       nerd_font_variant = 'mono'
@@ -35,7 +44,7 @@ return {
       },
       menu = { border = 'single' },
       documentation = {
-        auto_show = false,
+        auto_show = true,
         window = { border = 'single' }
       },
       ghost_text = { enabled = true },
@@ -53,7 +62,10 @@ return {
         }
       }
     },
-    signature = { window = { border = 'single' } },
+    signature = {
+      enabled = true,
+      window = { border = 'single' }
+    },
     fuzzy = {
       implementation = "prefer_rust_with_warning",
       sorts = {
