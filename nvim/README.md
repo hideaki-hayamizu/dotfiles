@@ -18,6 +18,7 @@
 - GNU make >= 4.4.1
 - a C compiler
 - a Nerd font
+- gitui >= 0.28.1
 
 <span style="color: aqua; ">For Unix Systems<br>
 - unzip(1)
