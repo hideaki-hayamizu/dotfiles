@@ -129,7 +129,10 @@ config.keys = {
   { key = 'w', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
   { key = ']', mods = 'LEADER', action = act.PaneSelect },
   { key = 'Z', mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
-  { key = 'l', mods = 'CTRL', action = act.ClearScrollback('ScrollbackAndViewport') },
+  { key = 'l', mods = 'CTRL', action = act.Multiple {
+    act.ClearScrollback 'ScrollbackAndViewport',
+    act.SendKey { key = 'L', mods = 'CTRL' },
+  }, },
   { key = 'U', mods = 'SHIFT|CTRL', action = act.ScrollByLine(-1) },
   { key = 'D', mods = 'SHIFT|CTRL', action = act.ScrollByLine(1) },
   -- font
