@@ -19,6 +19,7 @@
 - a C compiler
 - a Nerd font
 - gitui >= 0.28.1
+- glow >= 2.1.2
 
 <span style="color: aqua; ">For Unix Systems<br>
 - unzip(1)
