@@ -1,5 +1,7 @@
-[plugin]
-deps = []
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "58c4f4e"
+hash = "3bcc00df11efc3ae5d15f2dba860be7"
 
 [[flavor.deps]]
 use = "kalidyasin/yazi-flavors:tokyonight-day"
