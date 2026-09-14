@@ -1,0 +1,19 @@
+[settings]
+experimental = true
+
+[tools]
+cmake = "latest"
+fd = "latest"
+fzf = "latest"
+gitui = "latest"
+java = "latest"
+make = "latest"
+neovim = "latest"
+node = "latest"
+python = "latest"
+ripgrep = "latest"
+rust = "latest"
+tree-sitter = "latest"
+uv = "latest"
+yazi = "latest"
+zoxide = "latest"
