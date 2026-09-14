@@ -4,9 +4,11 @@ experimental = true
 [tools]
 cmake = "latest"
 fd = "latest"
+ffmpeg = "latest"
 fzf = "latest"
 gitui = "latest"
 java = "latest"
+jq = "latest"
 make = "latest"
 neovim = "latest"
 node = "latest"
