@@ -11,10 +11,13 @@ function IsAdmin
     return ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-# Launch elevated Windows PowerShell
-if (($PSVersionTable.PSEdition -eq "Desktop") -and (-not (IsAdmin)))
+if (-not (IsAdmin))
 {
-    Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
+    if ($PSVersionTable.PSEdition -eq "Desktop") {
+        Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
+    } else {
+        Start-Process pwsh -Verb RunAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
+    }
     exit
 }
 
@@ -202,6 +205,11 @@ else
     $msvcRoot = "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC"
     $version = (Get-ChildItem $msvcRoot -Directory | Sort-Object Name -Descending | Select-Object -First 1).Name
 
+    if (-not $version) {
+        Write-Error "MSVC tools not found under: $msvcRoot"
+        exit 1
+    }
+
     $msvcBinPath = Join-Path $msvcRoot "$version\bin\HostX64\x64"
     $roslynPath  = "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\bin\Roslyn"
     $clangPath = "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\Llvm\bin"
@@ -312,10 +320,20 @@ if (-not (Test-Path $venvPath)) {
     }
 
     mise exec -- uv venv $venvPath
-    mise exec -- uv pip install --python "$venvPath\Scripts\python.exe" pynvim
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Failed to create venv: $venvPath"
+    } else {
+        mise exec -- uv pip install --python "$venvPath\Scripts\python.exe" pynvim
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "Failed to install pynvim."
+        }
+    }
 }
 
 mise exec -- npm install -g neovim
+if ($LASTEXITCODE -ne 0) {
+    Write-Warning "Failed to install neovim npm package."
+}
 
 # Succeeded to install
 Write-Host "Setup script finished." -ForegroundColor Green -NoNewLine
