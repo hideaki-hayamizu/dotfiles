@@ -137,6 +137,24 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 -- status
+local function display_fixed_width(str, width)
+  local ellipsis = "..."
+  str = str or ""
+  if wezterm.column_width(str) > width then
+    local trunc_width = math.max(width - wezterm.column_width(ellipsis), 0)
+    str = wezterm.truncate_right(str, trunc_width) .. ellipsis
+    if wezterm.column_width(str) > width then
+      str = wezterm.truncate_right(str, width)
+    end
+  end
+
+  local pad = width - wezterm.column_width(str)
+  local left_pad = math.floor(pad / 2)
+  local right_pad = pad - left_pad
+
+  return string.rep(" ", left_pad) .. str .. string.rep(" ", right_pad)
+end
+
 local function add_component(components, bg, fg, icon, text)
   table.insert(components, { Background = { Color = bg } })
   table.insert(components, { Foreground = { Color = fg } })
@@ -184,12 +202,12 @@ wezterm.on("update-status", function(window, pane)
 
   -- key tables
   local key_table = window:active_key_table() or "?"
-  add_component(right_components, bg, fg, nil, " " .. key_table .. " ")
+  add_component(right_components, bg, fg, nil, " " .. display_fixed_width(key_table, 13) .. " ")
 
   -- process name
   if not config.show_tabs_in_tab_bar then
     local proc_name = utils.basename(pane:get_foreground_process_name() or "?")
-    add_component(right_components, bg, fg, nil, proc_name .. " ")
+    add_component(right_components, bg, fg, nil, display_fixed_width(proc_name, 8) .. " ")
   end
 
   -- tab index
