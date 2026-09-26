@@ -23,6 +23,8 @@ end
 --   }
 -- end
 
+vim.env.CC = "clang"
+
 local global = {
   mapleader = "\\",
   loaded_netrw = 1,
