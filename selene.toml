@@ -1,0 +1,9 @@
+std = "vim"
+
+exclude = [
+    "node_modules/",
+    ".git/",
+]
+
+[lint]
+mixed_table = "allow"
