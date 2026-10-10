@@ -8,13 +8,13 @@ return {
         icons = {
           package_installed = "",
           package_pending = "",
-          package_uninstalled = ""
+          package_uninstalled = "",
         },
         keymaps = {
           uninstall_package = "X",
-        }
-      }
-    }
+        },
+      },
+    },
   },
   {
     "mason-org/mason-lspconfig.nvim",
@@ -23,21 +23,41 @@ return {
       "mason-org/mason.nvim",
       {
         "neovim/nvim-lspconfig",
-        version = "^2"
-      }
+        version = "^2",
+      },
     },
     opts = {
       ensure_installed = {
-        "asm_lsp", "autotools_ls", "bashls", "clangd", "cssls", "dockerls", "glsl_analyzer", "html",
-        "jdtls", "jsonls", "lua_ls", "marksman", "neocmake", "powershell_es", "pyright",
-        "rust_analyzer", "sqlls", "ts_ls", "tombi", "vimls", "wgsl_analyzer", "yamlls"
+        "asm_lsp",
+        "autotools_ls",
+        "bashls",
+        "clangd",
+        "cssls",
+        "dockerls",
+        "glsl_analyzer",
+        "html",
+        "jdtls",
+        "jsonls",
+        "lua_ls",
+        "marksman",
+        "neocmake",
+        "powershell_es",
+        "pyright",
+        "rust_analyzer",
+        "sqlls",
+        "ts_ls",
+        "tombi",
+        "typos_lsp",
+        "vimls",
+        "wgsl_analyzer",
+        "yamlls",
       },
       automatic_enable = {
         exclude = {
           "jdtls",
-        }
-      }
-    }
+        },
+      },
+    },
   },
   {
     "jay-babu/mason-null-ls.nvim",
@@ -46,9 +66,9 @@ return {
       {
         "nvimtools/none-ls.nvim",
         dependencies = {
-          "nvim-lua/plenary.nvim"
+          "nvim-lua/plenary.nvim",
         },
-      }
+      },
     },
     config = function()
       local null_ls = require("null-ls")
@@ -56,12 +76,23 @@ return {
       require("mason-null-ls").setup({
         ensure_installed = {
           -- linter
-          "checkmake", "checkstyle", "hadolint", "markdownlint", "vint",
-          "stylelint", "ruff", "sqlfluff", "yamllint", "shellcheck",
+          "checkmake",
+          "checkstyle",
+          "hadolint",
+          "markdownlint",
+          "vint",
+          "stylelint",
+          "ruff",
+          "sqlfluff",
+          "yamllint",
+          "shellcheck",
           -- formatter
-          "shfmt", "stylua", "prettier", "clang_format", "gersemi", "google_java_format",
-          -- misc
-          "codespell",
+          "shfmt",
+          "stylua",
+          "prettier",
+          "clang_format",
+          "gersemi",
+          "google_java_format",
         },
         handlers = {
           function(source_name, methods)
@@ -71,13 +102,15 @@ return {
           stylua = function(source_name, methods)
             null_ls.register(null_ls.builtins.formatting.stylua.with({
               extra_args = {
-                "--indent-type", "Spaces",
-                "--indent-width", "2",
+                "--indent-type",
+                "Spaces",
+                "--indent-width",
+                "2",
               },
             }))
           end,
           shellcheck = function() end,
-        }
+        },
       })
 
       null_ls.setup({
@@ -104,25 +137,30 @@ return {
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true }),
         callback = function(args)
-          if vim.bo[args.buf].buftype ~= "" then return end
+          if vim.bo[args.buf].buftype ~= "" then
+            return
+          end
           format(args.buf)
         end,
       })
-    end
+    end,
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "mason-org/mason.nvim",
-      "mfussenegger/nvim-dap"
+      "mfussenegger/nvim-dap",
     },
     opts = {
       ensure_installed = {
-        "python", "bash", "javadbg", "codelldb"
+        "python",
+        "bash",
+        "javadbg",
+        "codelldb",
       },
       automatic_installation = { exclude = {} },
       handlers = {},
-    }
+    },
   },
   {
     "rcarriga/nvim-dap-ui",
@@ -154,22 +192,24 @@ return {
           {
             "<leader>dsu",
             "<cmd>DapStepOut<CR>",
-            desc = "DAP: Step out"
+            desc = "DAP: Step out",
           },
           {
             "<leader>dq",
             "<cmd>DapTerminate<CR>",
-            desc = "DAP: Terminate" 
+            desc = "DAP: Terminate",
           },
-        }
+        },
       },
-      "nvim-neotest/nvim-nio"
+      "nvim-neotest/nvim-nio",
     },
     lazy = false,
     keys = {
       {
         "<leader>dut",
-        function() require("dapui").toggle() end,
+        function()
+          require("dapui").toggle()
+        end,
         desc = "DAP UI toggle",
       },
     },
@@ -177,27 +217,33 @@ return {
       local dap = require("dap")
       local dapui = require("dapui")
       dapui.setup(opts)
-      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     end,
   },
   {
     "theHamsta/nvim-dap-virtual-text",
     dependencies = {
       "mfussenegger/nvim-dap",
-      "nvim-treesitter/nvim-treesitter"
+      "nvim-treesitter/nvim-treesitter",
     },
-    opts = {}
+    opts = {},
   },
   {
     "mfussenegger/nvim-jdtls",
     ft = "java",
     dependencies = { "mfussenegger/nvim-dap" },
-    opts = {}
+    opts = {},
   },
   {
     "b0o/schemastore.nvim",
-    lazy = false
-  }
+    lazy = false,
+  },
 }
