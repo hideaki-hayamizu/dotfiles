@@ -138,3 +138,16 @@ end
 
 vim.opt.shortmess:append("I")
 vim.opt.guicursor = "a:ver1,a:blinkwait200-blinkoff400-blinkon400"
+
+vim.filetype.add({
+  extension = {
+    jsonc = "jsonc",
+  },
+  filename = {
+    ["tsconfig.json"] = "jsonc",
+    [".eslintrc.json"] = "jsonc",
+  },
+  pattern = {
+    [".*/%.vscode/.*%.json"] = "jsonc",
+  },
+})
