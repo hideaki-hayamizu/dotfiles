@@ -415,12 +415,24 @@ if ($miseAvailable)
         {
             Write-Warning "Failed to install pynvim."
         }
-    }
 
-    mise exec -- npm install -g neovim
-    if ($LASTEXITCODE -ne 0)
-    {
-        Write-Warning "Failed to install neovim npm package."
+        mise exec -- uv pip install --python $venvPython ipykernel jupyter_client
+        if ($LASTEXITCODE -ne 0)
+        {
+            Write-Warning "Failed to install ipykernel or jupyter_client."
+        }
+        
+        & $venvPython -m ipykernel install --user --name python3 --display-name "Python 3"
+        if ($LASTEXITCODE -ne 0)
+        {
+            Write-Warning "Failed to create python3 kernel ."
+        }
+
+        mise exec -- uv pip install --python $venvPython jupytext nbconvert jupyter_core
+        if ($LASTEXITCODE -ne 0)
+        {
+            Write-Warning "Failed to install jupyter_core, jupytext or nbconvert."
+        }
     }
 }
 
