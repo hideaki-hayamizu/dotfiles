@@ -195,5 +195,9 @@ return {
     ft = "java",
     dependencies = { "mfussenegger/nvim-dap" },
     opts = {}
+  },
+  {
+    "b0o/schemastore.nvim",
+    lazy = false
   }
 }
