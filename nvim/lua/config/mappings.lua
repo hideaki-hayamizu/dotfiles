@@ -33,10 +33,10 @@ vim.keymap.set("n", "sk", "<C-w>k", { desc = "Move the window up" })
 vim.keymap.set("n", "sl", "<C-w>l", { desc = "Move the window right" })
 
 -- resize window
-vim.keymap.set("n", "<S-s>h", "<C-w><", { desc = "Decrease window width" })
-vim.keymap.set("n", "<S-s>j", "<C-w>-", { desc = "Decrease window height" })
-vim.keymap.set("n", "<S-s>k", "<C-w>+", { desc = "Increase window height" })
-vim.keymap.set("n", "<S-s>l", "<C-w>>", { desc = "Increase window width" })
+vim.keymap.set("n", "<C-w>h", "<C-w><", { desc = "Decrease window width" })
+vim.keymap.set("n", "<C-w>j", "<C-w>-", { desc = "Decrease window height" })
+vim.keymap.set("n", "<C-w>k", "<C-w>+", { desc = "Increase window height" })
+vim.keymap.set("n", "<C-w>l", "<C-w>>", { desc = "Increase window width" })
 
 -- tab
 vim.keymap.set("n", "tt", "<cmd>tabe .<CR>", { desc = "Create a new tab" })
