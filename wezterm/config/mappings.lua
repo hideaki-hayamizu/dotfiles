@@ -110,12 +110,12 @@ config.keys = {
   {
     key = "f",
     mods = "LEADER",
-    action = act({ ScrollByPage = 1 })
+    action = act({ ScrollByPage = 1 }),
   },
   {
     key = "b",
     mods = "LEADER",
-    action = act({ ScrollByPage = -1 })
+    action = act({ ScrollByPage = -1 }),
   },
   -- key table
   {
@@ -152,10 +152,10 @@ config.keys = {
   {
     key = "l",
     mods = "LEADER",
-    action = act.Multiple {
-      act.ClearScrollback "ScrollbackAndViewport",
-      act.SendKey { key = "l", mods = "CTRL|SHIFT" },
-    },
+    action = act.Multiple({
+      act.ClearScrollback("ScrollbackAndViewport"),
+      act.SendKey({ key = "l", mods = "CTRL|SHIFT" }),
+    }),
   },
   {
     key = "r",
@@ -258,6 +258,17 @@ config.mouse_bindings = {
     event = { Down = { streak = 1, button = "Right" } },
     mods = "NONE",
     action = act.PasteFrom("PrimarySelection"),
+  },
+  -- wheel
+  {
+    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+    mods = "NONE",
+    action = wezterm.action.ScrollByLine(-3),
+  },
+  {
+    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+    mods = "NONE",
+    action = wezterm.action.ScrollByLine(3),
   },
 }
 
