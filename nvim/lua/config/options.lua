@@ -122,6 +122,8 @@ local opts = {
   splitkeep = "screen",
   wildmode = { list = "longest" },
   modeline = false,
+  spell = true,
+  spelllang = { "en", "cjk" },
 }
 
 for k, v in pairs(global) do
