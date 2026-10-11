@@ -381,6 +381,14 @@ Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
 # Get providers for Neovim
 if ($miseAvailable)
 {
+    mise exec -- npm install -g neovim
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Warning "Failed to install the neovim npm package."
+    }
+
+    mise reshim
+
     $venvPath = Join-Path $HOME ".venvs\nvim"
     $venvPython = Join-Path $venvPath "Scripts\python.exe"
 
@@ -421,11 +429,11 @@ if ($miseAvailable)
         {
             Write-Warning "Failed to install ipykernel or jupyter_client."
         }
-        
+
         & $venvPython -m ipykernel install --user --name python3 --display-name "Python 3"
         if ($LASTEXITCODE -ne 0)
         {
-            Write-Warning "Failed to create python3 kernel ."
+            Write-Warning "Failed to create python3 kernel."
         }
 
         mise exec -- uv pip install --python $venvPython jupytext nbconvert jupyter_core
