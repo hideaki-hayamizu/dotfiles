@@ -114,9 +114,7 @@ return {
       })
 
       null_ls.setup({
-        sources = {
-          null_ls.builtins.formatting.rustfmt,
-        },
+        sources = {},
       })
 
       -- format
@@ -125,6 +123,9 @@ return {
           bufnr = bufnr,
           timeout_ms = 15000,
           filter = function(client)
+            if vim.bo[bufnr].filetype == "rust" then
+              return client.name == "rust_analyzer"
+            end
             return client.name == "null-ls"
           end,
         })
