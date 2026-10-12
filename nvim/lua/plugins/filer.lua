@@ -1,195 +1,286 @@
-local function my_open_win_config()
-  local screen_width = vim.opt.columns:get()
-  local screen_height = vim.opt.lines:get() - vim.opt.cmdheight:get()
-  local tree_width = math.floor(screen_width * 0.8)
-  local tree_height = math.floor(screen_height * 0.6)
-
-  return{
-    border = "rounded",
-    relative = "editor",
-    width = tree_width,
-    height = tree_height,
-    col = (screen_width - tree_width) / 2,
-    row = (screen_height - tree_height) / 2
-  }
-end
-
-local function my_on_attach(bufnr)
-  local api = require("nvim-tree.api")
-
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
-  local function edit_or_open()
-  local node = api.tree.get_node_under_cursor()
-  if not node then return end
-
-  if node.nodes ~= nil then
-    api.node.open.edit()
-  else
-    api.node.open.edit()
-    api.tree.close()
-  end
-end
-
-  local mappings = {
-    ["<CR>"] = { edit_or_open, "Open" },
-    ["<2-LeftMouse>"] = { edit_or_open, "Open" },
-    ["l"] = { edit_or_open, "Open" },
-    ["<C-t>"] = { api.node.open.tab, "Open: New Tab" },
-    ["<C-v>"] = { api.node.open.vertical, "Open: Vertical Split" },
-    ["<C-x>"] = { api.node.open.horizontal, "Open: Horizontal Split" },
-    ["q"] = { api.tree.close, "Close" },
-    ["h"] = { api.tree.close, "Close" },
-    ["P"] = { api.node.navigate.parent, "Parent Directory" },
-    ["<BS>"] = { api.node.navigate.parent_close, "Close Directory" },
-    ["n"] = { api.fs.create, "Create" },
-    ["D"] = { api.fs.remove, "Delete" },
-    ["d"] = { api.fs.trash, "Trash" },
-    ["r"] = { api.fs.rename, "Rename" },
-    ["e"] = { api.fs.rename_basename, "Rename: Basename" },
-    ["x"] = { api.fs.cut, "Cut" },
-    ["y"] = { api.fs.copy.node, "Copy" },
-    ["p"] = { api.fs.paste, "Paste" },
-    ["gY"] = { api.fs.copy.filename, "Copy Name" },
-    ["Y"] = { api.fs.copy.relative_path, "Copy Relative Path" },
-    ["gy"] = { api.fs.copy.absolute_path, "Copy Absolute Path" },
-    ["S"] = { api.tree.search_node, "Search" },
-    ["f"] = { api.live_filter.start, "Filter" },
-    ["F"] = { api.live_filter.clear, "Clean Filter" },
-    ["H"] = { api.tree.toggle_hidden_filter, "Toggle Dotfiles" },
-    ["U"] = { api.tree.toggle_custom_filter, "Toggle Hidden" },
-    ["I"] = { api.tree.toggle_gitignore_filter, "Toggle Git Ignore" },
-    ["R"] = { api.tree.reload, "Refresh" },
-    ["<C-k>"] = { api.node.show_info_popup, "Info" },
-    ["g?"] = { api.tree.toggle_help, "Help" },
-  }
-
-  for keys, mapping in pairs(mappings) do
-    vim.keymap.set("n", keys, mapping[1], opts(mapping[2]))
-  end
-end
-
 return {
-  "nvim-tree/nvim-tree.lua",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  version = "^1",
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
+  lazy = false,
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
+    "nvim-tree/nvim-web-devicons",
+  },
   keys = {
     {
       "<C-h>",
       function()
-        local api = require("nvim-tree.api")
-
-        local currentBuf = vim.api.nvim_get_current_buf()
-        local currentBufFt = vim.api.nvim_get_option_value("filetype", { buf = currentBuf })
-        if currentBufFt == "NvimTree" then
-          api.tree.toggle()
-        else
-          api.tree.focus()
-        end
+        require("neo-tree.command").execute({
+          toggle = true,
+          source = "filesystem",
+          position = "float",
+        })
       end,
-      desc = "nvim-tree: Focus/Toggle NvimTree",
+      desc = "Toggle Neo-tree",
     },
   },
-  config = function ()
-    require("nvim-tree").setup({
-      filesystem_watchers = {
-        enable = true,
-        ignore_dirs = { "tmp", "temp", ".cache", "Temp" },
-      },
-      view = {
-        signcolumn = "yes",
-        float = {
-          enable = true,
-          open_win_config = my_open_win_config,
+  opts = {
+    clipboard = {
+      sync = "global"
+    },
+    close_if_last_window = true,
+    enable_cursor_hijack = true,
+    popup_border_style = "rounded",
+    sort_case_insensitive = false,
+    use_default_mappings = false,
+    window = {
+      position = "float",
+      popup = {
+        size = {
+          height = "60%",
+          width = "80%",
         },
-        cursorline = false,
+        title = function (state)
+          return "Neo-tree"
+        end,
       },
-      modified = {
-        enable = true,
+      mapping_options = {
+        noremap = true,
+        nowait = true,
       },
-      renderer = {
-        indent_width = 2,
-        icons = {
-          show = {
-            hidden = true
-          },
-          git_placement = "after",
-          bookmarks_placement = "after",
-          symlink_arrow = "",
-          glyphs = {
-            folder = {
-              arrow_closed = " ",
-              arrow_open = " ",
-              default = "",
-              open = "",
-              empty = "",
-              empty_open = "",
-              symlink = "",
-              symlink_open = ""
-            },
-            default = "",
-            symlink = "",
-            bookmark = "",
-            modified = "",
-            hidden = "󱙝",
-            git = {
-              unstaged = "",
-              staged = "",
-              unmerged = "󰆑",
-              untracked = "",
-              renamed = "",
-              deleted = "",
-              ignored = ""
+      mappings = {
+        ["<CR>"] = "open",
+        ["<2-LeftMouse>"] = "open",
+        ["l"] = "open",
+        ["v"] = "open_vsplit",
+        ["s"] = "open_split",
+        ["t"] = "open_tabnew",
+        ["i"] = "open_with_window_picker",
+        ["P"] = {
+          "toggle_preview",
+          config = {
+            use_float = true,
+            use_snacks_image = false,
+            use_image_nvim = false
+          }
+        },
+        ["<C-b>"] = { "scroll_preview", config = {direction = 10} },
+        ["<C-f>"] = { "scroll_preview", config = {direction = -10} },
+        ["F"] = "focus_preview",
+        ["T"] = "toggle_node",
+        ["w"] = "close_node",
+        ["W"] = "close_all_nodes",
+        ["f"] = "refresh",
+        ["nf"] = {
+          "add",
+          config = {
+            show_path = "none",
+          }
+        },
+        ["nd"] = "add_directory",
+        ["d"] = "trash",
+        ["D"] = "delete",
+        ["r"] = "rename",
+        ["rb"] = "rename_basename",
+        ["u"] = "undo",
+        ["U"] = "restore_from_trash",
+        ["mf"] = "select",
+        ["mu"] = "clear_selection",
+        ["<C-S-i>"] = "invert_selection",
+        ["cy"] = "copy_to_clipboard",
+        ["cx"] = "cut_to_clipboard",
+        ["p"] = "paste_from_clipboard",
+        ["cc"] = "clear_clipboard",
+        ["y"] = "copy",
+        ["x"] = "move",
+        ["a"] = "toggle_auto_expand_width",
+        ["<esc>"] = "cancel",
+        ["q"] = "close_window",
+        ["?"] = "show_help",
+        ["<F1>"] = "show_help",
+        ["<"] = "prev_source",
+        [">"] = "next_source",
+      }
+    },
+    filesystem = {
+      hijack_netrw_behavior = "open_default",
+      find_by_full_path_words = ".*",
+      window = {
+        mappings = {
+          ["<F5>"] = "refresh",
+          ["gh"] = "toggle_hidden",
+          ["/"] = "fuzzy_finder",
+          ["g/"] = "fuzzy_finder_directory",
+          ["#"] = "fuzzy_sorter",
+          ["f"] = "filter_on_submit",
+          ["<C-x>"] = "clear_filter",
+          ["-"] = "navigate_up",
+          ["<bs>"] = "navigate_up",
+          ["gn"] = "set_root",
+          ["[g"] = "prev_git_modified",
+          ["]g"] = "next_git_modified",
+          ["i"] = "show_file_details",
+          ["rb"] = "rename_basename",
+          ["sh"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "s" }},
+          ["sc"] = { "order_by_created", nowait = false },
+          ["sd"] = { "order_by_diagnostics", nowait = false },
+          ["sg"] = { "order_by_git_status", nowait = false },
+          ["sm"] = { "order_by_modified", nowait = false },
+          ["sn"] = { "order_by_name", nowait = false },
+          ["ss"] = { "order_by_size", nowait = false },
+          ["st"] = { "order_by_type", nowait = false },
+        },
+        fuzzy_finder_mappings = {
+          ["<down>"] = "move_cursor_down",
+          ["<C-n>"] = "move_cursor_down",
+          ["<up>"] = "move_cursor_up",
+          ["<C-p>"] = "move_cursor_up",
+          ["<Esc>"] = "close",
+          ["<S-CR>"] = "close_keep_filter",
+          ["<C-CR>"] = "close_clear_filter",
+          ["<C-w>"] = { "<C-S-w>", raw = true },
+          {
+            n = {
+              ["j"] = "move_cursor_down",
+              ["k"] = "move_cursor_up",
+              ["<S-CR>"] = "close_keep_filter",
+              ["<C-CR>"] = "close_clear_filter",
+              ["<esc>"] = "close",
             }
           }
         }
       },
-      ui = {
-        confirm = {
-          remove = true,
-          trash = false,
+      bind_to_cwd = true,
+      check_gitignore_in_search = true,
+      filtered_items = {
+        visible = true,
+        force_visible_in_empty_folder = true,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_ignored = false,
+        hide_hidden = false,
+      },
+      always_show = {},
+      always_show_by_pattern = {
+        ".env*",
+      },
+    },
+    buffers = {
+      bind_to_cwd = true,
+      window = {
+        mappings = {
+          ["-"] = "navigate_up",
+          ["<bs>"] = "navigate_up",
+          ["gn"] = "set_root",
+          ["d"] = "buffer_delete",
+          ["bd"] = "buffer_delete",
+          ["i"] = "show_file_details",
+          ["rb"] = "rename_basename",
+          ["sh"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "s" }},
+          ["sc"] = { "order_by_created", nowait = false },
+          ["sd"] = { "order_by_diagnostics", nowait = false },
+          ["sm"] = { "order_by_modified", nowait = false },
+          ["sn"] = { "order_by_name", nowait = false },
+          ["ss"] = { "order_by_size", nowait = false },
+          ["st"] = { "order_by_type", nowait = false },
         },
       },
-      on_attach = my_on_attach,
-      filters = {
-        dotfiles = false,
-        git_ignored = false,
-        custom = { "^\\.git$", "^tmp$", "^temp$", "^Temp$" },
+    },
+    source_selector = {
+      winbar = false,
+      statusline = false,
+      sources = {
+        {
+          source = "filesystem",
+          display_name = "Files "
+        },
+        {
+          source = "buffers",
+          display_name = "Buffers "
+        },
+        {
+          source = "git_status",
+          display_name = "Git "
+        },
       },
-      hijack_cursor = true,
-      sync_root_with_cwd = true,
-      live_filter = {
-        prefix = "[FILTER]: ",
-        always_show_folders = false,
-      },
-      system_open = vim.fn.has("mac") == 1 and  {
-        cmd = "open",
-        args = { "-R" },
-      } or nil
-    })
-
-    local api = require("nvim-tree.api")
-
-    -- automatically resize the floating window
-    vim.api.nvim_create_augroup("NvimTreeResize", {
-      clear = true,
-    })
-    vim.api.nvim_create_autocmd({ "VimResized", "WinResized" }, {
-      group = "NvimTreeResize",
-      callback = function()
-        -- Get the nvim-tree window ID
-        local winid = api.tree.winid()
-        if (winid) then
-          api.tree.reload()
+      content_layout = "start",
+      tabs_layout = "start",
+    },
+    event_handlers = {
+      {
+        event = "file_opened",
+        handler = function()
+          require("neo-tree.command").execute({ action = "close" })
         end
-      end
-    })
-
-    -- automatically open file upon creation
-    api.events.subscribe(api.events.Event.FileCreated, function(file)
-      vim.cmd("edit " .. vim.fn.fnameescape(file.fname))
-    end)
-  end
+      },
+      {
+        event = "file_renamed",
+        handler = function(args)
+          print(args.source, " renamed to ", args.destination)
+        end
+      },
+      {
+        event = "file_moved",
+        handler = function(args)
+          print(args.source, " moved to ", args.destination)
+        end
+      },
+    },
+    git_status = {
+      window = {
+        mappings = {
+          -- no mappings
+        },
+      },
+    },
+    default_component_configs = {
+      git_status = {
+        symbols = {
+          added     = "Ad",
+          deleted   = "De",
+          modified  = "Mo",
+          renamed   = "Rn",
+          untracked = "Ut",
+          ignored   = "Xf",
+          unstaged  = "Ug",
+          staged    = "Sg",
+          conflict  = "C!",
+        }
+      },
+      diagnostics = {
+        symbols = {
+          hint = "H",
+          info = "I",
+          warn = "W",
+          error = "E",
+        },
+      },
+      indent = {
+        indent_size = 2,
+        with_markers = true,
+        indent_marker = "│",
+        last_indent_marker = "└",
+        with_expanders = true,
+        expander_collapsed = "",
+        expander_expanded = "",
+      },
+      icon = {
+        folder_closed = "",
+        folder_open = "",
+        folder_empty = "",
+        folder_empty_open = "",
+        selected = "",
+        use_filtered_colors = true
+      },
+      modified = {
+        symbol = "",
+      },
+      last_modified = {
+        enabled = false,
+      },
+      created = {
+        enabled = false,
+      },
+      symlink_target = {
+        enabled = true,
+        text_format = "  %s" -- %s will be replaced with the symlink target's path.
+      }
+    }
+  }
 }
