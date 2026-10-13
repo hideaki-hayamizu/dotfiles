@@ -135,15 +135,16 @@ return {
         format(vim.api.nvim_get_current_buf())
       end, { desc = "Format" })
 
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true }),
-        callback = function(args)
-          if vim.bo[args.buf].buftype ~= "" then
-            return
-          end
-          format(args.buf)
-        end,
-      })
+      -- Auto-format files on save
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true }),
+      --   callback = function(args)
+      --     if vim.bo[args.buf].buftype ~= "" then
+      --       return
+      --     end
+      --     format(args.buf)
+      --   end,
+      -- })
     end,
   },
   {
