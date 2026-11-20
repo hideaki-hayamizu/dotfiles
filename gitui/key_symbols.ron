@@ -1,0 +1,20 @@
+(
+    enter: Some("\u{21b5}"),
+    left: Some("\u{2190}"),
+    right: Some("\u{2192}"),
+    up: Some("\u{2191}"),
+    down: Some("\u{2193}"),
+    backspace: Some("BS"),
+    home: Some("\u{2912}"),
+    end: Some("\u{2913}"),
+    page_up: Some("\u{21de}"),
+    page_down: Some("\u{21df}"),
+    tab: Some("\u{21e5}"),
+    back_tab: Some("\u{21e4}"),
+    delete: Some("Del"),
+    insert: Some("Ins"),
+    esc: Some("Esc"),
+    control: Some("Ctrl-"),
+    shift: Some("Shift-"),
+    alt: Some("Alt-")
+)
