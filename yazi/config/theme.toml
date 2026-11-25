@@ -1,0 +1,24 @@
+[flavor]
+dark = "gruvbox-dark"
+light = "gruvbox-light"
+
+[git]
+unknown   = { fg = "#928374" }
+ignored   = { fg = "#928374", dim = true }
+untracked = { fg = "#b16286" }
+unstaged  = { fg = "#d79921" }
+staged    = { fg = "#98971a" }
+added     = { fg = "#689d6a" }
+deleted   = { fg = "#cc241d" }
+updated   = { fg = "#458588" }
+clean     = { fg = "#98971a" }
+
+unknown_sign   = " "
+ignored_sign   = "I"
+untracked_sign = "U"
+unstaged_sign  = "M"
+staged_sign    = "A"
+added_sign     = "+"
+deleted_sign   = "D"
+updated_sign   = "R"
+clean_sign     = " "
