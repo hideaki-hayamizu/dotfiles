@@ -1,0 +1,29 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "1ef5fe0"
+hash = "b9b3ba0d1e0067fa0b729db184b85fdd"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:no-status"
+rev = "1ef5fe0"
+hash = "3e023d31f29201efdac2a6ae35fedb78"
+
+[[plugin.deps]]
+use = "XYenon/clipboard"
+rev = "4b4b6c5"
+hash = "cdcc9c84c9757d585af78c87b012f38b"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "1ef5fe0"
+hash = "347cc6b190eb0c2fd60513cc7ae37412"
+
+[[flavor.deps]]
+use = "Sh00Fly/gruvbox-light"
+rev = "607dad3"
+hash = "8b2a726a1395106f7f1aac1619864bac"
+
+[[flavor.deps]]
+use = "bennyyip/gruvbox-dark"
+rev = "71b03f6"
+hash = "fc8fb278e5e1ede76b7a57c76a6db28b"
