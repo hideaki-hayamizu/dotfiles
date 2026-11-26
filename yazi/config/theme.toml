@@ -1,6 +1,9 @@
-[flavor]
-dark = "gruvbox-dark"
-light = "gruvbox-light"
+[app]
+overall = { bg = "reset" }
+
+# [flavor]
+# dark = "gruvbox-dark"
+# light = "gruvbox-light"
 
 [git]
 unknown   = { fg = "#928374" }
