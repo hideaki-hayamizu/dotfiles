@@ -1,9 +1,9 @@
 $projectRootDir = $PSScriptRoot
 
-# winget exit codes treated as success: OK / no applicable update / already installed
+# winget exit codes treated as success / no applicable update / already installed
 $wingetOkCodes = @(0, -1978335189, -1978335135)
 
-#region Helpers
+# helper functions
 function Fail
 {
     param([string]$Message)
@@ -66,8 +66,6 @@ function Get-VcVar
 
     return $line.Substring($Name.Length + 1)
 }
-
-#endregion
 
 # Relaunch as administrator
 if (-not (IsAdmin))
@@ -392,8 +390,22 @@ if ($miseAvailable)
     $venvPath = Join-Path $HOME ".venvs\nvim"
     $venvPython = Join-Path $venvPath "Scripts\python.exe"
 
-    if (-not (Test-Path $venvPython))
+    # python.exe can exist while being unusable (e.g. the mise Python it points to was updated or removed)
+    $venvOk = $false
+    if (Test-Path $venvPython)
     {
+        & $venvPython -c "import sys" 2>$null
+        $venvOk = ($LASTEXITCODE -eq 0)
+    }
+
+    if (-not $venvOk)
+    {
+        if (Test-Path $venvPath)
+        {
+            Write-Warning "venv is missing or broken. Recreating: $venvPath"
+            Remove-Item -Path $venvPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
         $venvDir = Split-Path $venvPath -Parent
 
         if (-not (Test-Path $venvDir))
@@ -441,6 +453,17 @@ if ($miseAvailable)
         {
             Write-Warning "Failed to install jupyter_core, jupytext or nbconvert."
         }
+
+        # hererocks comes from PyPI, so git is not required
+        mise exec -- uv pip install --python $venvPython hererocks
+        if ($LASTEXITCODE -ne 0)
+        {
+            Write-Warning "Failed to install hererocks."
+        }
+
+        # PATH takes a directory, not an exe file: this exposes hererocks.exe (and the other venv scripts)
+        Add-UserPath (Join-Path $venvPath "Scripts")
+        Update-SessionPath
     }
 }
 
