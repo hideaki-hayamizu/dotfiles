@@ -51,7 +51,7 @@ wezterm.on("window-resized", function (window, _)
   elseif utils.is_window_maximized(window) then
     size = max_font_size
   else
-    size = nil
+    size = default_font_size
   end
 
   if overrides.font_size == size then
