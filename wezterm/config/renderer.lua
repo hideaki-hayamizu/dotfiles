@@ -35,7 +35,7 @@ M.command_palette_fg_color = palette.fg
 M.cursor_blink_ease_in = "EaseIn"
 M.cursor_blink_ease_out =  "EaseInOut"
 M.cursor_thickness = 0
-M.default_cursor_style = "BlinkingBar" -- SteadyBlock
+M.default_cursor_style = "SteadyBlock" -- "BlinkingBar" 
 
 M.enable_scroll_bar = false
 
